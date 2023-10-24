@@ -133,20 +133,16 @@ Canvas sierpinski_carpet(Canvas c, int n, int x, int y)
         }
         return c;
     }
-    for (int a = 0; a < 3; a++)
-    {
-        for (int b = 0; b < 3; b++)
-        {
-            if (a == 1 && b == 1){}
-            else
-            {
-                sierpinski_carpet(c, n - 1, power(3, n - 1) * a + x,power(3, n - 1) * b + y);
-            }
-           
+    
             
-        }
-        
-    }
+    sierpinski_carpet(c, n - 1, x, y);
+    sierpinski_carpet(c, n - 1, x, power(3, n - 1) * 1 + y);
+    sierpinski_carpet(c, n - 1, x, power(3, n - 1) * 2 + y);
+    sierpinski_carpet(c, n - 1, power(3, n - 1) * 1 + x, y);
+    sierpinski_carpet(c, n - 1, power(3, n - 1) * 1 + x,power(3, n - 1) * 2 + y);
+    sierpinski_carpet(c, n - 1, power(3, n - 1) * 2 + x, y);
+    sierpinski_carpet(c, n - 1, power(3, n - 1) * 2 + x,power(3, n - 1) * 1 + y);
+    sierpinski_carpet(c, n - 1, power(3, n - 1) * 2 + x,power(3, n - 1) * 2 + y);
     
     return c;
 }
