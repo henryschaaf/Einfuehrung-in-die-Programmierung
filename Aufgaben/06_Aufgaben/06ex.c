@@ -72,6 +72,22 @@ Schreiben Sie die Funktion so, dass der jeweils richtige `channel` des Pixels mi
 erhält.
 */
 Canvas canvas_set_channel(Canvas c, int x, int y, ColorChannel channel, float v) {
+    switch (channel)
+    {
+    case Red:
+        c = canvas_set_r(c,x,y,v);
+        break;
+    case Green:
+        c = canvas_set_g(c,x,y,v);
+        break;
+    case Blue:
+        c = canvas_set_b(c,x,y,v);
+        break;
+
+    default:
+        break;
+    }
+    
     return c;
 }
 
@@ -84,6 +100,23 @@ die Y-Achse.
 Alle nicht in den Parametern angegeben Farbkanäle sollen unverändert bleiben.
 */
 Canvas swatch_rgb(Canvas c, ColorChannel channel_x, ColorChannel channel_y) {
+    float norm_x;
+    float norm_y;
+
+    
+    for (int i = 0; i <canvas_height(c); i++)
+    {
+        for (int j = 0; j <canvas_width(c); j++)
+        {
+            norm_x = (float) j / (canvas_width(c) - 1);
+            norm_y = (float) i / (canvas_height(c) - 1);
+
+            canvas_set_channel(c,j,i,channel_x,norm_x);
+            canvas_set_channel(c,j,i,channel_y,norm_y);
+        }
+        
+    }
+    
     return c;
 }
 
@@ -106,7 +139,7 @@ Hinweis: Häufig werden RGB-Farben alternativ mit Ganzzahlen zwischen 0 und 255 
 Flieder wäre dann z.B. (rot 219, grün 209, blau 255).
 */
 RGB lilac() {
-    RGB color;
+    RGB color = {0.86,0.82,1.0};
     return color;
 }
 
@@ -117,6 +150,11 @@ Kanäle gleichzeitig ansteuern!
 Setzen Sie die Farbe des Pixels mit Koordinate `(x, y)` auf die von `color` repräsentierte Farbe.
 */
 Canvas canvas_set_rgb_struct(Canvas c, int x, int y, RGB color) {
+    
+    c = canvas_set_r(c,x,y,color.r);
+    c = canvas_set_b(c,x,y,color.b);
+    c = canvas_set_g(c,x,y,color.g);
+
     return c;
 }
 
@@ -128,7 +166,18 @@ und den Blauwert mit 0.1140 multipliziert, und die Resultate addiert.
 Der Grauton mit dieser Helligkeit setzt alle drei Farbkanäle auf diesen Wert.
 */
 RGB rgb_to_gray(RGB color) {
-    return color;
+    float gray = color.r * 0.2989 + color.b * 0.1140 + color.g * 0.587;
+
+    RGB new_color = {gray, gray ,gray};
+
+    
+    return new_color;
+}
+
+RGB get_current_color(Canvas c,int x,int y)
+{
+    RGB color = {canvas_get_r(c,x,y),canvas_get_g(c,x,y),canvas_get_b(c,x,y)};
+    return color ;
 }
 
 /*
@@ -142,5 +191,17 @@ Funktionen in einer Hilfsfunktion zusammenfassen welche die Farbe an der gegeben
 Wert vom Typ `RGB` zurück gibt.
 */
 Canvas canvas_to_gray(Canvas c) {
+    RGB color;
+    
+    for (int i = 0; i <canvas_height(c); i++)
+    {
+        for (int j = 0; j <canvas_width(c); j++)
+        {
+            color = rgb_to_gray(get_current_color(c,j,i));
+
+            canvas_set_rgb_struct(c,j,i,color);
+        }
+        
+    }
     return c;
 }
