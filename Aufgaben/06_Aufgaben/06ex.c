@@ -36,6 +36,28 @@ Aber Vorsicht: bei Division auf `int`s wird immer zur Null abgerundet, während 
 Hilfsfunktion `float normalize(int value, int max)` ? :-) )
 */
 Canvas swatch_red_green(Canvas c) {
+    float norm_r;
+    float norm_g;
+
+    
+    for (int i = 0; i < canvas_height(c); i++)
+    {
+        for (int j = 0; j < canvas_width(c); j++)
+        {
+            norm_r = (float) j / canvas_width(c);
+            norm_g = (float) i / canvas_height(c);
+
+            printf("Norm Grün: %d\n", j);
+            printf("Norm Rot: %d\n", i);
+            printf("Norm Grün: %f\n", (float) i/canvas_height(c));
+            printf("Norm Rot: %f\n", j/canvas_width(c));
+
+            c = canvas_set_g(c,j,i,norm_g);
+            c = canvas_set_r(c,j,i,norm_r);
+        }
+        
+    }
+    
     return c;
 }
 
