@@ -17,7 +17,7 @@ Aufgabe 1a:
 `x` zeigt auf einen 32-bit Integer. Geben Sie diesen Integer zurück.
 */
 int32_t retrieve_from_pointer(int32_t *x) {
-    return 0;
+    return *x;
 }
 
 /*
@@ -25,6 +25,7 @@ Aufgabe 1b:
 `x` zeigt auf einen 32-bit Integer. Setzen Sie diesen Integer auf 42.
 */
 void set_through_pointer1(int32_t *x) {
+    *x = 42;
     return;
 }
 
@@ -34,6 +35,7 @@ Aufgabe 1c:
 Wert von `y`.
 */
 void set_through_pointer2(int32_t *x, int32_t y) {
+    *x = y;
     return;
 }
 
@@ -43,6 +45,7 @@ Aufgabe 1d:
 Lassen Sie den Wert auf den `y` zeigt dabei unverändert.
 */
 void set_through_pointer3(int32_t *x, int32_t *y) {
+    *x = *y;
     return;
 }
 
@@ -51,6 +54,9 @@ Aufgabe 1e:
 `x` und `y` zeigen beide auf 32-bit Integer. Vertauschen Sie den Wert auf den `x` zeigt und den Wert auf den `y` zeigt.
 */
 void swap(int32_t *x, int32_t *y) {
+    int32_t z = *x;
+    *x = *y;
+    *y = z;
     return;
 }
 
@@ -60,7 +66,13 @@ Aufgabe 1f:
 Wert zeigen (d.h. die Folgen von Einsen und Nullen an den beiden Speicherpositionen sind identisch).
 */
 bool point_to_equal_values(int32_t *x, int32_t *y) {
+    if(*x == *y)
+    {
+        return true;
+    }
+   
     return false;
+    
 }
 
 /*
@@ -69,8 +81,12 @@ Aufgabe 1g:
 Wert zeigen (d.h. die Speicherpositionen sind identisch).
 */
 bool point_to_same_values(int32_t *x, int32_t *y) {
-    return false;
-}
+    if(x == y)
+    {
+        return true;
+    }
+   
+    return false;}
 
 /*
 Dieses Struct kennen Sie schon (vom fünften Aufgabenblatt).
@@ -86,7 +102,7 @@ Aufgabe 2a:
 `x` zeigt auf eine Farbe. Geben Sie diese Farbe zurück.
 */
 RGB retrieve_from_pointer_struct(RGB *x) {
-    RGB color;
+    RGB color = *x;
     return color;
 }
 
@@ -95,6 +111,8 @@ Aufgabe 2b:
 `x` zeigt auf eine Farbe. Setzen Sie diese Farbe auf `Flieder` (rot 0.86, grün 0.82, blau 1.0).
 */
 void set_through_pointer_struct1(RGB *x) {
+    RGB j = {0.86,0.82,1.0};
+    *x = j;
     return;
 }
 
@@ -103,6 +121,7 @@ Aufgabe 2c:
 `x` zeigt auf eine Farbe. `y` _ist_ eine Farbe. Setzen Sie den Wert auf den `x` zeigt auf den Wert von `y`.
 */
 void set_through_pointer_struct2(RGB *x, RGB y) {
+    *x = y;
     return;
 }
 
@@ -112,6 +131,7 @@ Aufgabe 2d:
 Lassen Sie den Wert auf den `y` zeigt dabei unverändert.
 */
 void set_through_pointer_struct3(RGB *x, RGB *y) {
+    *x = *y;
     return;
 }
 
@@ -120,6 +140,9 @@ Aufgabe 2e:
 `x` und `y` zeigen beide auf Farben. Vertauschen Sie den Wert auf den `x` zeigt und den Wert auf den `y` zeigt.
 */
 void swap_struct(RGB *x, RGB *y) {
+    RGB z = *x;
+    *x = *y;
+    *y = z;
     return;
 }
 
@@ -129,6 +152,10 @@ Aufgabe 2f:
 Wert zeigen (d.h. die Folgen von Einsen und Nullen an den beiden Speicherpositionen sind identisch).
 */
 bool point_to_equal_values_struct(RGB *x, RGB *y) {
+    if(x->b == y->b && x->r == y->r && x->g == y->g)
+    {
+        return true;
+    }
     return false;
 }
 
@@ -138,6 +165,11 @@ Aufgabe 2g:
 Wert zeigen (d.h. die Speicherpositionen sind identisch).
 */
 bool point_to_same_values_struct(RGB *x, RGB *y) {
+    if (x == y)
+    {
+        return true;
+    }
+    
     return false;
 }
 
