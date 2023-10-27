@@ -105,9 +105,7 @@ uint16_t find_maximum_distance(uint16_t numbers[], size_t numbers_len) {
         {
             max = numbers[i];
         }
-        
-        
-    }
+        }
     
     return max - min;
 }
@@ -118,7 +116,73 @@ Geben Sie die kleinstmögliche Distanz zwischen zwei Zahlenwerten aus dem Array 
 Beispiel: Im Array {1, 3, 7, 4} ist die kleinste Distanz die zwischen 3 und 4, und beträgt damit `1`.
 */
 uint16_t find_minimum_distance(uint16_t numbers[], size_t numbers_len) {
-    return 0;
+    uint16_t min;
+    uint16_t max;
+    uint16_t diff;
+
+    if (numbers == 0)
+    {
+        return -1;
+    }
+    
+
+    if (numbers[0] - numbers[1] >= 0)
+    {
+        diff = numbers[0] - numbers[1];
+        max = numbers[0];
+        min = numbers[1];
+    }
+    else
+    {
+        diff = numbers[1] - numbers[0];
+        max = numbers[1];
+        min = numbers[0];
+    }
+    
+
+    for (int i = 2; i < numbers_len; i++)
+    {
+   
+        if (max - numbers[i] >= 0 && max - numbers[i] < diff)
+        {
+            min = numbers[i];
+        }
+        else
+        {
+            if (numbers[i] - min >= 0 && numbers[i] - min < diff)
+            {
+                max = numbers[i];
+            }
+            else
+            {
+               if (numbers[i] - max >= 0 && numbers[i] - max < diff )
+                {
+                                   
+                    min = max;
+
+                    max = numbers[i];
+
+                }
+                else
+                {
+                  if (min - numbers[i] >= 0 && min - numbers[i] < diff)
+                {
+
+                    max = min;
+
+                    min = numbers[i];
+
+                }  
+                }
+            }
+        }
+
+        diff = max - min;
+
+        
+    }
+    
+    return diff;
 }
 
 /*
@@ -128,7 +192,32 @@ Hinweis: Wir starten bei `1`. Sollte numbers_len also `5` sein, sind die ersten 
 einschließlich die von 5 gemeint: 1, 4, 9, 16, 25.
 */
 void square_ascending(uint16_t numbers[], size_t numbers_len) {
-    return;
+    for (int i = 1; i <= numbers_len; i++)
+    {
+        numbers[i-1] = i * i;
+    }
+    
+    return ;
+}
+
+void switch_arr(uint16_t in[], int one, int two)
+{
+    uint16_t placeholder = in[one];
+    in[two] = in[one];
+    in[one] = placeholder;
+
+}
+
+void put_at_index(uint16_t in[], int new_index, int old_index)
+{
+    uint16_t value = in[old_index];
+
+    for (int i = new_index; i <= old_index; i++)
+    {
+        in[new_index + i] = in[new_index + i - 1];
+    }
+    
+    in[new_index] = value;
 }
 
 /*
@@ -137,5 +226,25 @@ Füllen Sie das Array `out` mit den aufsteigend sortierten Zahlen aus dem `in` A
 Beispiel: Ist `in` {1, 4, 3, 7, 4}, so soll `out` am Ende {1, 3, 4, 4, 7} sein.
 */
 void sort_ascending(uint16_t in[], uint16_t out[], size_t len) {
+    for (int i = 0; i < len; i++)
+    {
+        out [i] = *find_maximal_number(in, len);
+    }
+
+    for (int i = 0; i < len; i++)
+    {
+        int j = 0;
+        while (in[i] > out[j])
+        {
+            j++;
+        }
+
+        out[len-1] = in[i];
+        put_at_index(out,j,i);
+        
+        
+        
+    }
+    
     return;
 }
