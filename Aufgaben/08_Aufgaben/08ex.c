@@ -15,6 +15,11 @@ Aufgabe 1a:
 Lesen Sie das Headerfile `turtlecanvas.h`. Diese Funktion soll die Turtle `d` Schritte vorwärts machen lassen.
 */
 void turtle_advance_by(TurtleCanvas *c, uint32_t d) {
+    for (int i = 0; i < d; i++)
+    {
+        turtle_advance(c);
+    }
+    
     return;
 }
 
@@ -24,6 +29,23 @@ Füllen Sie die Turtlecanvas mit horizontalen, abwechselnd schwarzen und weißen
 schwarz gefärbt werden). Die Turtle ist anfangs an Position (0, 0), ist nach rechts orientiert, und zeichnet schwarz.
 */
 void turtle_stripes(TurtleCanvas *c) {
+    int i = 0;
+    while (i < turtle_canvas_height(c))
+    {
+
+        if (i % 2 == 0)
+        {
+            turtle_advance_by(c,turtle_canvas_width(c));
+        }
+
+            turtle_rotate_left(c);
+            turtle_advance(c);
+            turtle_rotate_right(c);
+            turtle_toggle_color(c);
+            i++;
+        
+    }
+    
     return;
 }
 
@@ -39,7 +61,18 @@ Aufgabe 2a:
 Geben Sie einen Pointer auf das erste Vorkommen der größten Zahl im Eingabearray zurück.
 */
 uint16_t *find_maximal_number(uint16_t numbers[], size_t numbers_len) {
-    return numbers;
+    uint16_t *max = numbers;
+
+    for (int i = 0; i < numbers_len; i++)
+    {
+        if (*max < numbers[i])
+        {
+            max = &numbers[i];
+        }
+        
+    }
+    
+    return max;
 }
 
 /*
@@ -47,7 +80,9 @@ Aufgabe 2b:
 Geben Sie (einen Pointer auf) das Teilarray zurück, welches ab dem ersten Vorkommen der größten Zahl im Eingabearray beginnt.
 */
 uint16_t *find_subarray_starting_at_maximal_number(uint16_t numbers[], size_t numbers_len) {
-    return numbers;
+    
+    return find_maximal_number(numbers,numbers_len);
+
 }
 
 /*
@@ -56,7 +91,25 @@ Geben Sie die größtmögliche Distanz zwischen zwei Zahlenwerten aus dem Array 
 Beispiel: Im Array {1, 3, 7, 4} ist die größte Distanz die zwischen 1 und 7, und beträgt damit `6`.
 */
 uint16_t find_maximum_distance(uint16_t numbers[], size_t numbers_len) {
-    return 0;
+    uint16_t min = numbers[0];
+    uint16_t max = 0;
+
+    for (int i = 0; i < numbers_len; i++)
+    {
+        if (min > numbers[i])
+        {
+            min = numbers[i];
+        }
+
+        if (max < numbers[i])
+        {
+            max = numbers[i];
+        }
+        
+        
+    }
+    
+    return max - min;
 }
 
 /*
