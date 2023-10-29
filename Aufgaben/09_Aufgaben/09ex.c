@@ -188,7 +188,9 @@ wiederverwenden kann. Wir wollen nur noch einmal Unterschiede zwischen direkter 
 Übergabe durch Pointer demonstrieren.
 */
 bool free_pancake2(PileOfPancakes *p) {
-    return false;
+    free_pancake(*p);
+    free(p);
+    return true;
 }
 
 /*
@@ -225,5 +227,11 @@ geben Sie es zurück.
 Hinweis: Wir starten bei `1`.
 */
 uint16_t *create_dynamic_array(size_t x) {
-    return NULL;
+    uint16_t *dynamic_arr = (uint16_t *) malloc(x * sizeof(uint16_t));
+    for (int i = 1; i <= x; i++)
+    {
+        dynamic_arr[i - 1] = i * i;
+    }
+    
+    return dynamic_arr;
 }
