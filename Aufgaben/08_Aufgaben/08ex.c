@@ -212,13 +212,21 @@ void put_at_index(uint16_t in[], int new_index, int old_index)
 {
     uint16_t value = in[old_index];
 
-    for (int i = new_index; i <= old_index; i++)
+    for (int i = old_index; i > new_index; i--)
     {
-        in[new_index + i] = in[new_index + i - 1];
+        in[i] = in[i - 1];
     }
     
     in[new_index] = value;
 }
+
+void printUint16Array(uint16_t *array, size_t length) {
+    for (size_t i = 0; i < length; i++) {
+        printf("%u ", array[i]);
+    }
+    printf("\n");
+}
+
 
 /*
 Aufgabe 2f:
@@ -231,6 +239,7 @@ void sort_ascending(uint16_t in[], uint16_t out[], size_t len) {
         out [i] = *find_maximal_number(in, len);
     }
 
+
     for (int i = 0; i < len; i++)
     {
         int j = 0;
@@ -239,12 +248,12 @@ void sort_ascending(uint16_t in[], uint16_t out[], size_t len) {
             j++;
         }
 
-        out[len-1] = in[i];
-        put_at_index(out,j,i);
-        
-        
-        
+        out[len - 1] = in[i];
+        put_at_index(out, j, len - 1);
+
+
     }
-    
+
     return;
 }
+
