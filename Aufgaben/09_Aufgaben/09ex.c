@@ -27,7 +27,13 @@ Geben Sie einen gültigen Pointer auf den gleichen Wert wie `x` zurück.
 Tipp: Ein Pointer direkt auf `x` ist nicht gültig. Warum?
 */
 uint32_t *return_pointer(uint32_t x) {
-    return NULL;
+    uint32_t *y = malloc(sizeof(uint32_t));
+    if(y != NULL)
+    {
+        *y = x;
+
+    }
+    return y;
 }
 
 /*
@@ -36,7 +42,9 @@ Geben Sie den Wert zurück, auf den der Pointer `x` zeigt, und rufen Sie `free` 
 Tipp: Nach dem Aufruf von `free` darf der Pointer nicht mehr dereferenziert werden.
 */
 uint32_t free_pointer(uint32_t *x) {
-    return 0;
+    uint32_t value = *x;
+    free(x);
+    return value;
 }
 
 /*
@@ -140,7 +148,14 @@ Aufgabe 2a:
 Rufen Sie `free` für alle Pointer auf, die Teil des gegebenen Pfannkuchens sind.
 */
 bool free_pancake(PileOfPancakes p) {
-    return false;
+    if(p.further_layers != NULL)
+    {
+        free_pancake(*(p.further_layers));
+    }
+    
+    free(p.further_layers);
+    
+    return true;
 }
 
 /*
@@ -150,6 +165,16 @@ Hinweis: Wir nutzen Ihre free_pancake() Funktion zum freigeben des erstellten Pf
 */
 PileOfPancakes create_pancake(uint32_t n) {
     PileOfPancakes p = { .layer = ActualPancake, .further_layers = NULL };
+    
+    PileOfPancakes *latestLayer = &p;
+    for (int i = 1; i < n; i++)
+    {
+        latestLayer->further_layers = (PileOfPancakes *) malloc(sizeof(PileOfPancakes));
+        PileOfPancakes new_pancake = { .layer = ActualPancake, .further_layers = NULL };
+        *(latestLayer->further_layers) = new_pancake;
+        latestLayer = latestLayer->further_layers;
+    }
+    
     return p;
 }
 
