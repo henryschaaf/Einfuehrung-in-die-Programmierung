@@ -13,6 +13,22 @@ void insertion_sort(int array[], int len) {
      * Sortiervorgang soll auf dem originalen Array stattfinden und
      * kein zweites verwendet werden.
      */
+
+    int key;
+    for (int i = 1; i < len; i++)
+    {
+        key = array[i];
+
+        int j = i -1;
+        while (array[j] > key && j >= 0)
+        {
+            array[j + 1] = array [j];
+            j--;
+        }
+
+        array[j + 1] = key;
+        
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -31,7 +47,7 @@ int main(int argc, char *argv[]) {
     printf("Unsortiertes Array:");
     print_array(array, len);
 
-    /* Aufruf Insertionsort */
+    insertion_sort(array,len);
 
     printf("Sortiertes Array:");
     print_array(array, len);
