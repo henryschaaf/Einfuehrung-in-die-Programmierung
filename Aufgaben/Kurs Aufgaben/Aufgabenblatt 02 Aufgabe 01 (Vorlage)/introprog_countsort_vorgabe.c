@@ -2,7 +2,6 @@
 #include <string.h>
 #include "introprog_countsort.h"
 #include "arrayio.h"
-#define MAX_VALUE 100
 /* Ab hier Funktion count_sort_calculate_counts implementieren */
 
 void count_sort_calculate_counts(int arr_in[], int len, int count_array[]) {
