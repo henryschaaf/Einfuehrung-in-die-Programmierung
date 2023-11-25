@@ -17,8 +17,9 @@
  *
  * Gib einen Pointer auf den neuen Anfang der Liste zurueck.
  */
-element* insert_at_begin(element* /* Variable benennen */, element* /* Variable benennen */) {
-    /* HIER implementieren. */
+element* insert_at_begin(element* first, element* new_element) {
+    new_element -> next = first;
+    return new_element;
 }
 
 /* Kreiere ein neues Element mit dynamischem Speicher.

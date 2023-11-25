@@ -23,7 +23,15 @@ typedef struct _list { /* Separater Wurzelknoten */
 #ifndef ELEMENTDEF
 #define ELEMENTDEF
 /* HIER struct _element implementieren. */
+struct _element{
+    
+    char title[MAX_STR];
+    char author[MAX_STR];
+    uint32_t year;
+    uint64_t isbn;
 
+    struct _element *next;
+};
 
 /* ab hier nichts mehr implementieren. */
 #endif
