@@ -22,7 +22,7 @@ void count_sort_write_output_array(int arr_out[], int c[],  SortDirection order)
     if (order == DESCENDING)
     {
         printf("Descending\n");
-        for (int i = MAX_VALUE - 1; i >= 0; i--)
+        for (int i = MAX_VALUE; i >= 0; i--)
         {
             for (int j = 0; j < c[i]; j++)
             {
@@ -81,11 +81,19 @@ SortDirection extract_order_direction(char *order) {
 void count_sort(int input_array[], int len, int output_array[], SortDirection order) {
 
     printf("Count\n");
-    int c[MAX_VALUE + 1] = {0};
+    const int value = MAX_VALUE;
+    int c[value+ 1];
+
+    for (int i = 0; i <= value; i++)
+    {
+        c[i] = 0;
+    }
+    
     count_sort_calculate_counts(input_array,len,c);
 
     printf("Write\n");
     count_sort_write_output_array(output_array,c,order);
+    print_array(c, 101);
 
 }
 
