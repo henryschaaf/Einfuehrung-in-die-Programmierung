@@ -3,6 +3,7 @@
 #include <string.h>
 #include "introprog_sortierte_buecherliste.h"
 #include "introprog_structs_lists_input.h"
+#include "introprog_buecherliste.h"
 
 /* HIER struct _element implementieren. */
 
@@ -19,8 +20,42 @@
  * Gib einen Pointer auf den neuen oder alten Anfang der Liste
  * zurueck.
  */
-element* insert_sorted(element* /* Variable benennen */, element* /* Variable benennen */) {
-    /* HIER implementieren. */
+element* insert_sorted(element* first_e, element* new_elem) {
+    
+    element * current = first_e;
+    element * previ = NULL;
+
+    if (current == NULL)
+    {
+        return new_elem;
+    }
+    
+    while (new_elem -> isbn > current -> isbn)
+    {
+        if (current -> next == NULL)
+        {
+            current -> next = new_elem;
+            new_elem -> next = NULL;
+            break;
+        }
+        
+        previ = current;
+        current = current -> next;
+    }
+    
+    if (current -> next != new_elem)
+    {
+        if (previ == NULL)
+        {
+            new_elem -> next = first_e;
+            return new_elem;
+        }
+            previ -> next = new_elem;
+            new_elem -> next = current;
+        
+    }
+    
+    return first_e;
 }
 
 /* Lese die Datei ein und fuege neue Elemente in die Liste ein 
