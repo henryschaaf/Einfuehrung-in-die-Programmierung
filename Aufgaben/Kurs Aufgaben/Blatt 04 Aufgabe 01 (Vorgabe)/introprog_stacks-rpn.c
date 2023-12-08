@@ -11,9 +11,17 @@
  * float - Zahl, die als neues Element auf den Stack gelegt
  *         werden soll.
  */
-void stack_push(stack* /* Variable benennen */, float /* Variable benennen */)
+void stack_push(stack* stapel, float wert)
 {
-    /* HIER implementieren */
+    stack_element *new_element = (stack_element *) malloc(sizeof(stack_element));
+
+    if (new_element == NULL)
+    {
+    }
+    
+    new_element ->next = stapel->top;
+    new_element->value = wert;
+    stapel->top = new_element;
 }
 
 /* 
@@ -24,9 +32,23 @@ void stack_push(stack* /* Variable benennen */, float /* Variable benennen */)
  *
  * Gebe die im Element enthaltenen Zahl zurück
  */
-float stack_pop(stack* /* Variable benennen */)
+float stack_pop(stack* stapel)
 {
-    /* HIER implementieren */
+    if (stapel == NULL ||  stapel->top == NULL)
+    {
+        return NAN;
+    }
+    
+
+    float wert = stapel->top->value;
+
+    stack_element *elem_del = stapel->top;
+
+    stapel->top = stapel->top->next;
+
+    free(elem_del);
+
+    return wert;
 }
 
 /*
@@ -41,11 +63,44 @@ float stack_pop(stack* /* Variable benennen */)
  * stack*  - Ein Pointer auf den Stack
  * char*  - Eine Zeichenkette
  */
-void process(stack* /* Variable benennen */, char* /* Variable benennen */)
+void process(stack* stapel, char* input)
 {
-    /* HIER implementieren */
-    printf("\n<Logik fehlt!>\n");
-    return;
+    for (int i = 0; i < strlen(input); i++)
+    {
+        if (is_number(&input[i]))
+        {
+            stack_push(stapel, strtod(&input[i],&input));
+            i = -1;
+        }
+        else
+        {
+            if(!is_add(&input[i]) && !is_sub(&input[i]) && !is_mult(&input[i]))
+            {
+                break;
+            }
+
+            float last_one = stack_pop(stapel);
+            float secondlast_one = stack_pop(stapel);
+
+            if (is_add(&input[i]))
+            {
+                stack_push(stapel,last_one + secondlast_one);
+            }
+
+            if (is_mult(&input[i]))
+            {
+                stack_push(stapel,last_one * secondlast_one);
+            }
+
+            if (is_sub(&input[i]))
+            {
+                stack_push(stapel,secondlast_one - last_one);
+            }
+            
+        }
+ 
+    }
+    
     /* Du kannst zur Erkennung der Token folgende Hilfsfunktionen
      * benutzen:
      *
@@ -65,5 +120,9 @@ void process(stack* /* Variable benennen */, char* /* Variable benennen */)
  * Gebe einen Pointer auf den Stack zurück.
  */
 stack* stack_erstellen() {
-    /* HIER implementieren */
+    stack *stapel = (stack *) malloc(sizeof(stack));
+
+    stapel->top = NULL;
+
+    return stapel;
 }
