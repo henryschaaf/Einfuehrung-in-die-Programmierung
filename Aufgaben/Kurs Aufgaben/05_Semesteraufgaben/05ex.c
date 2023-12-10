@@ -27,7 +27,78 @@ Nutzen Sie `malloc`, um das neue Blatt zu erstellen. Der Testrunner wird das Bla
 darum brauchen Sie sich nicht zu kümmern.
 */
 bool search_tree_insert(TreeNode *t, uint16_t x) {
-    return false;
+    
+   
+    
+    if (t->item == x)
+    {
+        return false;
+    }
+    
+
+    if (t->item > x)
+    {
+        if (t->left == NULL)
+        {
+            TreeNode *new_leaf = (TreeNode *) malloc(sizeof(TreeNode));
+            if (new_leaf == NULL)
+            {
+                printf("Fehler beim speichern");
+            }
+            
+            new_leaf->item = x;
+            new_leaf->left = NULL;
+            new_leaf->right= NULL;
+
+            t->left = new_leaf;
+
+            return true;
+        }
+        else
+        {
+            return search_tree_insert(t->left,x);
+        }
+        
+        
+    }
+    else
+    {
+        if (t->right == NULL)
+        {
+            TreeNode *new_leaf = (TreeNode *) malloc(sizeof(TreeNode));
+            if (new_leaf == NULL)
+            {
+                printf("Fehler beim speichern");
+            }
+            
+            new_leaf->item = x;
+            new_leaf->left = NULL;
+            new_leaf->right= NULL;
+
+            t->right = new_leaf;
+
+            return true;
+        }
+        else
+        {
+            return search_tree_insert(t->right,x);
+        }
+    }
+    
+    
+}
+
+uint16_t search_max(TreeNode *t)
+{
+    if (t->right != NULL)
+    {
+        return search_max(t->right);
+    }
+    else
+    {
+        return t->item;
+    }
+    
 }
 
 /*
@@ -37,5 +108,30 @@ Falls keine solche Zahl existiert, geben Sie stattdessen `x` zurück. Die Laufze
 proportional zur Höhe des Baumes sein, aber unabhängig von der Gesamtzahl an Knoten. 
 */
 uint16_t search_tree_get_greater_than(TreeNode *t, uint16_t x) {
+    if (t == NULL)
+    {
+        return x;
+    }
+    
+    
+    if (t->item <= x)
+    {
+        if (t->right != NULL)
+        {
+            return search_tree_get_greater_than(t->right,x);
+        }
+
+        return x;
+    }
+    else
+    {
+        if (t->left != NULL && search_max(t->left) > x)
+        {
+            return search_tree_get_greater_than(t->left,x);
+        }
+
+        return t->item;
+    }
+    
     return 0;
 }
