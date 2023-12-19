@@ -29,5 +29,80 @@ zu erfragen, rufen Sie `sphinx_ask(s, i)` auf. Aber Achtung: Wenn Sie diese Funk
 1 + log2(n) (aufgerundet) mal aufrufen, stürzt das Programm fehlerhaft ab.
 */
 bool descending_sphinx(Sphinx *s, size_t n) {
-    return false;
+    printf("NEU");
+    printf("\n");
+    
+    bool zahl_vorhanden = false;
+    int count = (n + 1)/2; 
+    
+
+    
+    
+    printf("len: %zu  !  ", n);
+    printf("%f", log(n) + 1.5);
+    
+    int end = log(n) /log(2) + 1.5;
+    printf("\n");
+
+    printf("%d", end);
+    for (int i = 1; i <= end; i++)
+    {
+
+        int zahl;
+        if(count > 0)
+        {
+            zahl = sphinx_ask(s,count - 1);
+        }
+        else
+       {
+            zahl = sphinx_ask(s,count);
+       } 
+        
+        printf("count :%d",count);
+        printf("i: %d",i);
+        printf("zahl: %d",zahl);
+        printf("pow: %f",pow(2,(i+1)));
+        
+        if (zahl == 12345)
+        {
+            printf("\n");
+            printf("true");
+            printf("\n");
+            return true;
+        }
+        int old_count = count;
+
+        if (zahl < 12345)
+        {
+           count -= n/pow(2,(i+1)) - 0.5;
+           if (old_count == count)
+           {
+                count--;
+           }
+           
+        }
+        else
+        {
+            count += (n/pow(2,(i+1))) + 0.5;
+            if (old_count == count)
+           {
+                count++;
+           }
+        }
+        
+        if(count > n)
+        {
+            printf("\n");
+            printf("false");
+            printf("\n");
+            return zahl_vorhanden;
+        }
+        
+    }
+    
+    
+    printf("\n");
+    printf("false");
+    printf("\n");
+    return zahl_vorhanden;
 }
