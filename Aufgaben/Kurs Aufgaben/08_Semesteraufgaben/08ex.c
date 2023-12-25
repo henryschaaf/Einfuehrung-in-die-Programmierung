@@ -39,8 +39,14 @@ Algorithmen häufig so an sich.
 ArrayWithLength base_case(ArrayWithLength arr) {
     ArrayWithLength ret;
 
-    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * 0);
-    ret.len = 0;
+    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * arr.len);
+    ret.len = arr.len;
+
+    for (int i = 0; i < ret.len; i++)
+    {
+        ret.arr[i] = arr.arr[i];
+    }
+    
 
     return ret;
 }
@@ -56,9 +62,43 @@ Der Speicher für die Arrayelemente im Rückgabewert soll eigens mit malloc allo
 ArrayWithLength combine(ArrayWithLength arr1, ArrayWithLength arr2) {
     ArrayWithLength ret;
     
-    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * 0);
-    ret.len = 0;
+    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * (arr1.len + arr2.len));
+    ret.len = arr1.len + arr2.len;
 
+    int j = 0;
+    int i = 0;
+    int k = 0;
+
+    while (i < arr1.len && arr2.len && k < ret.len)
+    {
+        if (arr1.arr[i] >= arr2.arr[j])
+        {
+            ret.arr[k] = arr1.arr[i];
+            i++;
+        }
+        else
+        {
+            ret.arr[k] = arr2.arr[j];
+            j++;
+        }
+        
+        k++;
+    }
+    
+    while (i < arr1.len)
+    {
+        ret.arr[k] = arr1.arr[i];
+        i++;
+        k++;
+    }
+
+    while (j < arr2.len)
+    {
+        ret.arr[k] = arr2.arr[j];
+        j++;
+        k++;
+    }
+    
     return ret;
 }
 
@@ -74,8 +114,56 @@ Der Speicher für die Arrayelemente im Rückgabewert soll eigens mit malloc allo
 ArrayWithLength merge_k(ArrayWithLength *arrs, size_t count) {
     ArrayWithLength ret;
     
-    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * 0);
-    ret.len = 0;
+    
+    while (count != 1)
+    {
+        printf("counter: %zu", count);
+        printf("\n");
+        for (int i = 0; i < (count + 1)/2; i++)
+        {
+            if (2 * i + 1 < count)
+            {
+                arrs[i] = combine(arrs[2 * i],arrs[2 * i + 1]);
+            }
+            else
+            {
+                if (2 * i < count)
+                {
+                   arrs[i] = arrs[2 * i];
+                }
+                
+            }
+            
+            
+        }
+
+        count -= count/2;
+        
+        
+    }
+
+    ret.arr = (uint16_t *) malloc(sizeof(uint16_t) * arrs->len);
+
+    ret.len = arrs->len;
+
+   if (count == 1)
+    {
+        printf("Ende");
+        for (int i = 0; i < arrs->len; i++)
+        {
+            printf("Hier : %d", ret.arr[i] );
+            printf("\n");
+            printf("Von : %d", arrs->arr[i] );
+            printf("\n");
+
+            ret.arr[i] = arrs->arr[i];
+
+            printf("Jetzt : %d", ret.arr[i] );
+            printf("\n");
+            printf("\n");
+        }
+        //ret.arr = base_case(*arrs).arr;
+    }    
 
     return ret;
 }
