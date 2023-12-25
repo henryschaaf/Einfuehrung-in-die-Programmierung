@@ -69,7 +69,7 @@ ArrayWithLength combine(ArrayWithLength arr1, ArrayWithLength arr2) {
     int i = 0;
     int k = 0;
 
-    while (i < arr1.len && arr2.len && k < ret.len)
+    while (i < arr1.len && j < arr2.len && k < ret.len)
     {
         if (arr1.arr[i] >= arr2.arr[j])
         {
@@ -129,7 +129,7 @@ ArrayWithLength merge_k(ArrayWithLength *arrs, size_t count) {
             {
                 if (2 * i < count)
                 {
-                   arrs[i] = arrs[2 * i];
+                   arrs[i] = base_case(arrs[2 * i]);
                 }
                 
             }
@@ -148,22 +148,16 @@ ArrayWithLength merge_k(ArrayWithLength *arrs, size_t count) {
 
    if (count == 1)
     {
-        printf("Ende");
         for (int i = 0; i < arrs->len; i++)
         {
-            printf("Hier : %d", ret.arr[i] );
-            printf("\n");
-            printf("Von : %d", arrs->arr[i] );
-            printf("\n");
+
 
             ret.arr[i] = arrs->arr[i];
 
-            printf("Jetzt : %d", ret.arr[i] );
-            printf("\n");
-            printf("\n");
+  
         }
-        //ret.arr = base_case(*arrs).arr;
     }    
 
+    
     return ret;
 }
