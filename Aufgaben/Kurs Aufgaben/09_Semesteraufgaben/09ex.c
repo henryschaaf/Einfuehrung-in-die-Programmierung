@@ -88,8 +88,18 @@ bool is_max_heap(Array arr) {
 
 void tree_to_arrray_rec(TreeNode *t, Array arr, int pos)
 {
+    if (t == NULL)
+    {
+        return;
+    }
+    
+    printf("Start Rek.");
+    printf("\n");
+
     if (pos - 1 < arr.len)
     {
+        printf("Einfuegen");
+        printf("\n");
         arr.arr[pos - 1] = t->item;
     }
     else
@@ -99,12 +109,16 @@ void tree_to_arrray_rec(TreeNode *t, Array arr, int pos)
 
     if (t->left != NULL)
     {
-        tree_to_arrray_rec(t->left, arr, 2 * (pos + 1));
+        printf("left");
+        printf("\n");
+        tree_to_arrray_rec(t->left, arr, 2 * (pos));
     }
 
     if (t->right != NULL)
     {
-        tree_to_arrray_rec(t->left, arr, 2 * (pos + 1) + 1);
+        printf("right");
+        printf("\n");
+        tree_to_arrray_rec(t->right, arr, 2 * (pos) + 1);
     }
     
     
