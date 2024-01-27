@@ -25,13 +25,98 @@ Gegeben ein Array `arr`, geben Sie zurück, ob der zugehörige linksvollständig
 die max-heap Eigenschaft erfüllt.
 */
 bool is_max_heap(Array arr) {
-    return false;
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("NEW");
+    printf("\n");
+    printf("length: %zu", arr.len);
+    printf("\n");
+    bool is_max_heap = true;
+    
+    for (int i = 0; i < arr.len; i++)
+    {
+        int left = 2 * (i + 1);
+        int right = 2 * (i + 1) + 1;
+        printf("left %d", left);
+        printf("\n");
+        printf("right %d", right);
+        printf("\n");
+        printf("\n");
+
+        if (left <= arr.len)
+        {
+            printf("left child");
+            printf("\n");
+            if (arr.arr[i] >= arr.arr[left - 1]) // minus eins weil die Formel zur Berechnung bei der Wurzel mit eins beginnt
+            {
+                printf("min");
+                printf("\n");
+            }
+            else
+            {
+                printf("max");
+                printf("\n");
+                return false;
+            }
+            
+        }
+
+
+        if (right <= arr.len)
+        {
+            printf("right child");
+            printf("\n");
+            if (arr.arr[i] >= arr.arr[right - 1]) // minus eins weil die Formel zur Berechnung bei der Wurzel mit eins beginnt
+            {
+                printf("min");
+                printf("\n");
+            }
+            else
+            {
+                printf("max");
+                return false;
+            }
+        }
+        printf("\n");
+        
+    }
+    
+    return is_max_heap;
+}
+
+
+void tree_to_arrray_rec(TreeNode *t, Array arr, int pos)
+{
+    if (pos - 1 < arr.len)
+    {
+        arr.arr[pos - 1] = t->item;
+    }
+    else
+    {
+        printf("Fehler, Array nicht lan genug");
+    }
+
+    if (t->left != NULL)
+    {
+        tree_to_arrray_rec(t->left, arr, 2 * (pos + 1));
+    }
+
+    if (t->right != NULL)
+    {
+        tree_to_arrray_rec(t->left, arr, 2 * (pos + 1) + 1);
+    }
+    
+    
+    
 }
 
 /*
 Aufgabe 2:
 
 Gegeben ein linksvollständiger Binärbaum, tragen Sie im Array `arr` dessen Arrayrepräsentation ein.
+
+
 
 Tipp 1: Wie so häufig bei Bäumen, bietet sich hier eine rekursive Lösung an.
 Tipp 2: Diese Funktion selbst ist allerdings nur so mäßig gut für rekursive Aufrufe geeignet, eventuell sollten Sie sich eine (rekursive) Hilfsfunktion schreiben.
@@ -41,4 +126,5 @@ Tipp 5: Regelmäßig zähneputzen und genug bewegen.
 */
 void tree_to_array(TreeNode *t, Array arr) {
 
+    tree_to_arrray_rec(t,arr,1);
 }
