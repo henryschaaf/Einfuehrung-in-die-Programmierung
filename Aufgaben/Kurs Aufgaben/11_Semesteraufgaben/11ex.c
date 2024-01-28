@@ -34,7 +34,75 @@ Tipp: Die erste Zeile im erzeugten Bild stellt das Eingabearray dar.
 */
 void visualize_partition(Visualizer *v, uint8_t *arr, size_t len) {
     visualizer_append_array(v, arr);
+    int pivot = len - 1;
+    for (int i = 0; i < len; i++)
+    {
+        if (arr[i] >= arr[pivot] && pivot > 0)
+        {
+            int value = arr[i];
+            arr[i] = arr[pivot - 1];
+            arr[pivot - 1] = arr[pivot];
+            arr[pivot] = value;
+            pivot --;
+            i--;
+            visualizer_append_array(v, arr);
+        }
+        
+    }
+    
     return;
+}
+
+void sort_quickly_rec(Visualizer *v, uint8_t *arr, size_t len,int start, int pivot)
+{
+    int pivot_start = pivot;
+    if (start >= pivot)
+    {
+        printf("Fertig");
+        printf("\n");
+        return;
+    }
+
+    printf("start %d", start);
+    printf("\n");
+    printf("pivot %d", pivot);
+    printf("\n");
+    printf("\n");
+
+   for (int i = start; i < pivot; i++)
+    {
+        if (arr[i] >= arr[pivot] && pivot > 0)
+        {
+            int value = arr[i];
+            arr[i] = arr[pivot - 1];
+            arr[pivot - 1] = arr[pivot];
+            arr[pivot] = value;
+            pivot --;
+            i--;
+        }
+    }
+
+    visualizer_append_array(v, arr);
+
+
+    int start_left = start;
+    int pivot_left = pivot - 1;
+    int start_right = pivot + 1;
+    int pivot_right = pivot_start;
+    printf("start left %d", start_left); //[160, 32, 96, 128, 224, 64, 192, 0, 255] 
+    printf("\n");
+    printf("pivot left %d", pivot_left);
+    printf("\n");
+    printf("\n");
+    printf("start right %d", start_right);
+    printf("\n");
+    printf("pivot right %d", pivot_right);
+    printf("\n");
+    printf("\n");
+
+    sort_quickly_rec(v,arr,len,start_left,pivot_left);
+    sort_quickly_rec(v,arr,len,start_right,pivot_right);
+    
 }
 
 /*
@@ -49,5 +117,10 @@ Tipp 3: Diese Funktion selbst lässt sich nicht sinnvoll rekursiv aufrufen. Schr
 */
 void sort_quickly(Visualizer *v, uint8_t *arr, size_t len) {
     visualizer_append_array(v, arr);
+    printf("NEW");
+    printf("\n");
+    sort_quickly_rec(v,arr,len,0,len-1);
+    
+    
     return;
 }
