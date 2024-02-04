@@ -39,6 +39,42 @@ Die Baumausgabe nimmt den zurückgegebenen Knoten als Wurzel. Sollte die Baumaus
 überraschend aussehen, könnte das gut an einer falsch zurückgegebenen Wurzel liegen.
 */
 HeightTreeNode *rotate_right(HeightTreeNode *t) {
+    if (t->left == NULL)
+    {
+        return t;
+    }
+    
+    //speichern des neuen Parent knotens
+    HeightTreeNode *parent = t->left;
+    
+    //Wenn des rechte Knoten des linken Teilbaums nicht existert kann er nicht bei der Rotation verschoben werden
+    if (t->left->right != NULL)
+    {
+        t->left = t->left->right;
+        t->left->parent = t;
+    }
+    else
+    {
+        t->left = NULL;
+    }
+    
+    //Variable heighz bekommt den Wert des höhren Teilbaums plus eins
+    int height = (height_or_zero(t->right) + 1 < height_or_zero(t->left) + 1) ? height_or_zero(t->left) + 1: height_or_zero(t->right) + 1;
+    
+    //Rotation von Wurzel nach rechts und neuem Parent
+    parent -> right = t;
+    t->parent = parent;
+    t = parent;
+    t -> parent = NULL;
+    t ->height += 1;
+
+    t->right->height = height;
+
+    //<berechnung der neuen Höhe des neuen Knotens
+    height = (height_or_zero(t->right) + 1 < height_or_zero(t->left) + 1) ? height_or_zero(t->left) + 1: height_or_zero(t->right) + 1;
+    
+    t->height = height;
+
     return t;
 }
 
@@ -58,5 +94,27 @@ Aufgabe 2:
 Gegeben ein Beinahe-AVL-Baum mit korrekten Höhenwerten, geben Sie zurück, welche Rotationen ihn zu einem AVL-Baum machen.
 */
 Rotations determine_rotations(HeightTreeNode *t) {
-    return Left;
+    if (height_or_zero(t->left) < height_or_zero(t->right))
+    {
+        if (height_or_zero(t->right->left) <= height_or_zero(t->right->right))
+        {
+            return Left;
+        }
+        else
+        {
+            return DoubleRotationRightLeft;
+        }
+        
+    }
+    else
+    {
+        if (height_or_zero(t->left->left) >= height_or_zero(t->left->right))
+        {
+            return Right;
+        }
+        else
+        {
+            return DoubleRotationLeftRight;
+        }
+    }
 }
